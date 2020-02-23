@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title></title>
+    <link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+    <script src="https://image.39.net/jquery/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+
+
+<!--<div class="container">
+    <h1 class="text-center">Chart.js</h1>
+</div>-->
+
+<div class="container">
+    <div class="row">
+        <p id = "data1"></p>
+        <p id = "data2"></p>
+        <p id = "data3"></p>
+        <div class="col-sm-6" style="margin: auto">
+          <!--  <h2 class="text-center"></h2>-->
+            <canvas id="doughnut-graph" height="300px" width="400px" ></canvas>
+        </div>
+    </div>
+</div>
+
+<script src="js/Chart.bundle.min.js"></script>
+<script>
+    // Data for doughnut chart
+        var doughnutData = {
+            labels: [
+                "基础代谢",
+                "当日摄入",
+                "运动消耗"
+            ],
+            datasets: [
+                {
+                    data: [v1, v2, v3],
+                    backgroundColor: [
+                        "#DCDCDC",
+                        "#187cc2",
+                        "#3CB371"
+                    ],
+                    hoverBackgroundColor: [
+                        "#DCDCDC",
+                        "#187cc2",
+                        "#3CB371"
+                    ]
+                }]
+        };
+
+        var ctx = document.getElementById("doughnut-graph").getContext("2d");
+        var DoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: doughnutData,
+            responsive : true
+        });
+
+
+
+
+
+</script>
+</body>
+</html>

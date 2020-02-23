@@ -265,8 +265,7 @@ a.button1:hover{
 	text-decoration:none;
 	color:#fff;
 	}
-	
-a.button2{
+button.button2{
 	float:left;
 	width:145px;
 	height:41px;
@@ -279,11 +278,11 @@ a.button2{
 	text-transform:uppercase;
 	line-height:41px;
 	margin:0 0 0 0;
-	border-radius:5px; -webkit-border-radius:5px; 
+	border-radius:5px; -webkit-border-radius:5px;
 	transition:0.5s; -webkit-transition:0.5s;
 	background:#11598b;
 	text-decoration:none;
-	}
+}
 	
 a.button2:hover{
 	text-decoration:none;
@@ -461,11 +460,12 @@ a.button2:hover{
 	margin:0 0 25px 0;
 	}
 
+
 .feature span{
 	float:left;
 	width:33px;
 	height:33px;
-	background:#187cc2;
+	background:#3CB371;
 	text-align:center;
 	font-size:16px;
 	color:#fff;
@@ -611,14 +611,13 @@ img.imagethumb2{
 	border-radius:7px; -webkit-border-radius:7px;
 	padding-left:0px;
 	padding-right:0px;
-	width:28%;
-	float:left;
-	margin:0 2.5% 30px 2.5%;
+	width:40%;
+	margin:auto;
 	}
 
 .common_section .faqbox.longer{
-	float:right;
-	width:61%;
+	float:initial;
+	width:50%;
 	margin:0 3.3% 30px 2.3%;
 	}
 
@@ -630,7 +629,7 @@ img.imagethumb2{
 	font-weight:normal;
 	padding:17px 0 17px 60px;
 	margin:0 0 0 0;
-	background:#fff url(images/icons/i6.png) no-repeat 25px center;
+	/*//background:#fff url(images/icons/i10.png) no-repeat 25px center;*/
 	border-bottom:1px solid #e7e7e7;
 	}
 	
@@ -773,7 +772,7 @@ img.imagethumb2{
 	font-size:30px;
 	color:#fff;
 	font-weight:normal;
-	margin:0 0 8px 0;
+	margin:0 0 0 0;
 	}
 	
 .pricing_table_section .block .head p{
@@ -938,10 +937,10 @@ form.hpform input[type="text"]:focus, form.hpform input[type="email"]:focus, for
 .subscribe_section h2{
 	text-align:center;
 	font-family: 'open_sansregular';
-	font-size:18px;
+	font-size:14px;
 	color:#fff;
 	font-weight:normal;
-	margin:0 0 40px 0;
+	margin:0 0 0 0;
 	padding:0 0 0 0;
 	text-transform:uppercase;
 	}

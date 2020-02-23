@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://image.39.net/preview/jfxgj/css/base.css" rel="stylesheet" type="text/css">
+    <script src="https://image.39.net/jquery/jquery-1.7.2.min.js"></script>
+    <link href="css/calculate.css" rel="stylesheet" type="text/css" />
+
+</head>
+<body>
+
+<div class="popWin vPop1">
+    <div class="popCon">
+        <div class="tit">
+            <a class="closeIt" href="javascript:;"></a>
+            活动系数
+        </div>
+        <ul class="selectUl">
+            <li>
+                <a href="javascript:;" onclick="selectAct(this)">
+                    <h3>1.2=少量活动</h3>
+                    <p>（办公室工作，久坐或站立为主；/居家：久坐不动，打字阅读或者上网；/运动：几乎从来不运动）</p>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="selectAct(this)">
+                    <h3>1.3=轻度活动</h3>
+                    <p>（工作时经常走动，如售货员、服务员、讲课等；/居家：有不少家务活，需要较多走动；/运动：有散步等轻度活动）</p>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="selectAct(this)">
+                    <h3>1.6=中度活动</h3>
+                    <p>（工作中有不少体力活要做，如电工、车床操作等；/居家：很少能坐下来，需要做较多重家务活或者打理菜园花园；/运动：每周固定锻炼好几次）</p>
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;" onclick="selectAct(this)">
+                    <h3>2.0=激烈活动</h3>
+                    <p>（从事比较重体力活得工作，例如建筑、器械维修等；/居家：经常举重、搬运重物；/运动：每天都参加体育运动例如赛跑、登山自行车等）</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="popWin vPop3">
+    <div class="popCon">
+        <div class="tit">
+            <a class="closeIt" href="javascript:;"></a>
+            年龄
+        </div>
+        <ul class="selectUl">
+            <li>
+                <a href="javascript:;">
+                    1个月
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    2个月
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    3个月
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    4个月
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    5个月
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    6个月
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    7个月
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    8个月
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    9个月
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    10个月
+                </a>
+            </li>
+            <li>
+                <a href="javascript:;">
+                    11个月
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<div class="popWin vPop5" style="display: none;" width="100">
+    <div class="popCon" >
+        <div class="tit">
+            <a class="closeIt" href="javascript:;"></a>
+            性别
+        </div>
+        <ul class="selectUl">
+            <li>
+                <a onclick="selectSex(this)" href="javascript:;">
+                    女
+                </a>
+            </li>
+            <li>
+                <a onclick="selectSex(this)" href="javascript:;">
+                    男
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</div>
+<div class="testimonial_box">
+
+
+    <div class="vGrey v2" width="100%"  height="580" >
+        <h3>请输入您个人信息：</h3>
+        <!--span class="xzts">*未满1岁的儿童可以双击年龄框选择月数哦！</span-->
+        <dl>
+            <dd><label class="flexbox">性&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;别<input class="flex" type="text" id="sexId"></label></dd>
+            <dd><label class="flexbox">年&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;龄<input class="flex" type="text" id="age" onkeyup="this.value=this.value.replace(/\D/g,'')">岁</label></dd>
+            <dd><label class="flexbox">体&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;重<input class="flex" type="text" id="weight" onkeyup="clearNoNum(this)">kg</label></dd>
+            <dd><label class="flexbox">身&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;高<input class="flex" type="text" id="height" onkeyup="clearNoNum(this)">cm</label></dd>
+            <dd><label class="flexbox">活动系数<input class="flex" type="text" id="active"></label></dd>
+
+        </dl>
+        <a class="vBtn" id = "jisuan" href="#" url="result.html#">计 算</a>
+    </div>
+</div>
+<script>
+    function clearNoNum(obj)
+    {
+        obj.value = obj.value.replace(/[^\d.]/g,"");  //清除“数字”和“.”以外的字符
+        obj.value = obj.value.replace(/^\./g,"");  //验证第一个字符是数字而不是.
+        obj.value = obj.value.replace(/\.{2,}/g,"."); //只保留第一个. 清除多余的.
+        obj.value = obj.value.replace(".","$#$").replace(/\./g,"").replace("$#$",".");
+        obj.value = obj.value.replace(/^(\-)*(\d+)\.(\d).*$/, '$1$2.$3'); //只能输入1个小数
+    }
+    function showSubNav(){
+        var oNav = document.getElementById("subNav");
+        oNav.style.display = oNav.style.display=="none" ? "block" : "none";
+    }
+
+    $(".closeIt").click(function(){
+        $(this).parent().parent().parent().hide();
+    });
+
+    $(".rrqq input").focus(function(){
+        $(this).select();
+    });
+
+    $(".rrqq .minus").click(function(){
+        var _input = $(this).parent().find("input");
+        _input.val(parseInt(_input.val())-1);
+    });
+    $(".rrqq .plus").click(function(){
+        var _input = $(this).parent().find("input");
+        _input.val(parseInt(_input.val())+1);
+    });
+    //显示性别div luxp
+    $("#sexId").click(function(){
+        $("#sexId").blur();
+        $(".popWin.vPop5").css("display","block");
+    });
+    //点击选择性别 luxp
+    function selectSex(object){
+        var con=object.text.trim();
+        $("#sexId").val(con);
+        $(".popWin.vPop5").css("display","none");
+    }
+
+    //点击显示活动系数
+    $("#active").click(function(){
+        $("#active").blur();
+        $(".popWin.vPop1").css("display","block");
+    });
+    //点击选择活动系数
+    function selectAct(object){
+        var con=object.text.trim().substring(0,3);
+        $("#active").val(con);
+        $(".popWin.vPop1").css("display","none");
+    }
+
+    //点击计算 luxp
+    $(".vBtn").click(function(){
+        var sex = $("#sexId").val();
+        var age = parseInt($("#age").val());
+        var weight = $("#weight").val();
+        var height = $("#height").val();
+        var active = $("#active").val();
+        //判断空值
+        if(sex=='' || age=='' || weight=='' || height=='' || active==''){
+            alert("亲,请填写所有信息！");
+            return;
+        }
+        //判断数字
+        if(isNaN(age) || isNaN(weight)|| isNaN(height) || isNaN(active)){
+            alert("亲,请填写数字！");
+            return;
+        }
+        //判断身高范围
+        if(height<120){
+            alert("亲,我猜你的身高一定超过120cm");
+            return;
+        }
+        if(height>250){
+            alert("亲,我猜你身高一定没超过250cm");
+            return;
+        }
+        if(age>150){
+            alert("亲,我猜你一定没超过150岁");
+            return;
+        }
+        if(age<18){
+            alert("亲,本测试仅适用于年满18周岁的成年人");
+            return;
+        }
+        if(weight<30){
+            alert("亲,我猜你体重一定大于30kg");
+            return;
+        }
+        if(weight>600){
+            alert("亲,我猜你体重一定小于600kg");
+            return;
+        }
+        /*if(recievedData=='needLogin'){
+            system.postMessage('?sex=' + sex+ '&age=' + age+ '&weight=' + weight+ '&height=' + height+ '&active=' + active);
+            return false;
+        }*/
+        window.location.href=$(this).attr('url')+ '?sex=' + sex+ '&age=' + age+ '&weight=' + weight+ '&height=' + height+ '&active=' + active;
+    });
+</script>
+</body>
+</html>

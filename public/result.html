@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://image.39.net/preview/jfxgj/css/base.css" rel="stylesheet" type="text/css">
+    <script src="https://image.39.net/jquery/jquery-1.7.2.min.js"></script>
+</head>
+
+<body>
+
+
+<div class="wholePage1" width="100%">
+    <div class="jgBox" width="100%"  height="400" >
+        <div class="zd"></div>
+        <div class="jgCon" width="100%" >
+            <p class="p1">你每天所需要的热量为：</p>
+            <p class="p1" style="text-align:center;"><span><i id = "reliang">大卡</i></span></p>
+            <div class="mso">
+                如果你想维持目前体重，每天摄入足够的热量即可。如果你想减少体重，可将摄入热量在此基础上减少300-500大卡。</div>
+            <div class="twoBtn">
+                <a class="twoB1" href="calculate.html">重新计算</a>
+              <!--  <a class="twoB2" href="#"><i></i>分享给小伙伴</a>		</div>-->
+        </div>
+    </div>
+</div></div>
+
+<script>
+    window.onload = function () {
+        let url = window.location.href.split('?');
+        var results = url[1].split("&");
+        var sex = results[0].split("=")[1];
+        var age = results[1].split("=")[1];
+        var weight = results[2].split("=")[1];
+        var height = results[3].split("=")[1];
+        var active = results[4].split("=")[1];
+        var result = new Number();
+        if(sex == '%E5%A5%B3'){
+            result = (655 + (9.6 * weight) + (1.8 * height) - (4.7 * age) )* active ;
+        }else{
+            result =  (66 + (13.7 * weight) + ( 5 * height) - (6.8 * age)) * active ;
+        }
+        result = result.toFixed(2)
+        console.log(result);
+        var span = document.getElementById("reliang");
+        span.innerText = result + "千卡";
+
+    }
+</script>
+
+
+</body>
+</html>

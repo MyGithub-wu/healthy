@@ -1,0 +1,1623 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>jquery特效制作复选框,全选,反选,取消,购物车，统计价格，统计，淘宝</title>
+
+    <link href="css/index.css" rel="stylesheet" type="text/css" />
+
+    <script type="text/javascript" src="js/jquery.1.4.2-min.js"></script>
+    <script type="text/javascript" src="js/Calculation.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //jquery特效制作复选框全选反选取消(无插件)
+            // 全选
+            $(".allselect").click(function () {
+
+                if($(this).attr("checked")){
+                    $(".gwc_tb2 input[name=newslist]").each(function () {
+                        $(this).attr("checked", true);
+                        // $(this).next().css({ "background-color": "#3366cc", "color": "#ffffff" });
+                    });
+                    GetCount();
+
+                }
+                else
+                {
+                    $(".gwc_tb2 input[name=newslist]").each(function () {
+                        if ($(this).attr("checked")) {
+                            $(this).attr("checked", false);
+                            //$(this).next().css({ "background-color": "#ffffff", "color": "#000000" });
+                        } else {
+                            $(this).attr("checked", true);
+                            //$(this).next().css({ "background-color": "#3366cc", "color": "#000000" });
+                        }
+                    });
+                    GetCount();
+
+                }
+
+            });
+
+            //反选
+            $("#invert").click(function () {
+                $(".gwc_tb2 input[name=newslist]").each(function () {
+                    if ($(this).attr("checked")) {
+                        $(this).attr("checked", false);
+                        //$(this).next().css({ "background-color": "#ffffff", "color": "#000000" });
+                    } else {
+                        $(this).attr("checked", true);
+                        //$(this).next().css({ "background-color": "#3366cc", "color": "#000000" });
+                    }
+                });
+                GetCount();
+            });
+
+            //取消
+            $("#cancel").click(function () {
+                $(".gwc_tb2 input[name=newslist]").each(function () {
+                    $(this).attr("checked", false);
+                    // $(this).next().css({ "background-color": "#ffffff", "color": "#000000" });
+                });
+                GetCount();
+            });
+
+            // 所有复选(:checkbox)框点击事件
+            $(".gwc_tb2 input[name=newslist]").click(function () {
+                if ($(this).attr("checked")) {
+                    //$(this).next().css({ "background-color": "#3366cc", "color": "#ffffff" });
+                } else {
+                    // $(this).next().css({ "background-color": "#ffffff", "color": "#000000" });
+                }
+            });
+
+            // 输出
+            $(".gwc_tb2 input[name=newslist]").click(function () {
+                // $("#total2").html() = GetCount($(this));
+                GetCount();
+                //alert(conts);
+            });
+        });
+        //******************
+        function GetCount() {
+            var conts = 0;
+            var aa = 0;
+            $(".gwc_tb2 input[name=newslist]").each(function () {
+                if ($(this).attr("checked")) {
+                    for (var i = 0; i < $(this).length; i++) {
+                        conts += parseInt($(this).val());
+                        aa += 1;
+                    }
+                }
+            });
+            $("#shuliang").text(aa);
+            $("#zong1").html((conts).toFixed(2));
+            $("#jz1").css("display", "none");
+            $("#jz2").css("display", "block");
+        }
+    </script>
+
+
+</head>
+<body>
+
+<div class="gwc" style=" margin:auto;" id="all">
+    <table cellpadding="0" cellspacing="0" class="gwc_tb1">
+        <tr>
+            <td class="tb1_td1">全选</td>
+            <td class="tb1_td1"><input id="Checkbox1" type="checkbox"  class="allselect"/></td>
+            <td class="tb1_td3">食物</td>
+            <td class="tb1_reliang">热量</td>
+            <td class="tb1_td5">数量</td>
+            <td class="tb1_td6">总热量</td>
+            <!--<td class="tb1_td7">操作</td>-->
+        </tr>
+    </table>
+
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box1");
+            $("#add1").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min1").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total1").html((parseInt(t.val()) * 144).toFixed(2));
+                $("#newslist-1").val(parseInt(t.val()) * 144);
+            }
+            setTotal();
+        })
+    </script>
+
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-1" /></td>
+          <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">鸡蛋</a></td>
+            <td class="tb1_td4">144千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min1" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box1" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add1" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total1" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+         <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box2");
+            $("#add2").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min2").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total2").html((parseInt(t.val()) * 227).toFixed(2));
+                $("#newslist-2").val(parseInt(t.val()) * 227);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-2" /></td>
+          <!--  <td class="tb2_td2"><a href="#"><img src="images/img2.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">猪肉包子</a></td>
+            <td class="tb1_td4">227千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min2" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box2" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add2" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total2" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;"></label></td>
+          <!--  <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box3");
+            $("#add3").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min3").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total3").html((parseInt(t.val()) * 120).toFixed(2));
+                $("#newslist-3").val(parseInt(t.val()) * 120);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-3" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">白菜包子</a></td>
+            <td class="tb1_td4">120千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min3" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box3" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add3" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total3" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box4");
+            $("#add4").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min4").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total4").html((parseInt(t.val()) * 31).toFixed(2));
+                $("#newslist-4").val(parseInt(t.val()) * 31);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-4" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">豆浆</a></td>
+            <td class="tb1_td4">31千卡/1毫升</td>
+            <td class="tb1_td5">
+                <input id="min4" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box4" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add4" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total4" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box5");
+            $("#add5").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min5").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total5").html((parseInt(t.val()) * 338).toFixed(2));
+                $("#newslist-5").val(parseInt(t.val()) * 338);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-5" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">燕麦片</a></td>
+            <td class="tb1_td4">338千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min5" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box5" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add5" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total5" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box6");
+            $("#add6").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min6").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total6").html((parseInt(t.val()) * 313).toFixed(2));
+                $("#newslist-6").val(parseInt(t.val()) * 313);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-6" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">面包</a></td>
+            <td class="tb1_td4">313千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min6" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box6" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add6" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total6" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box7");
+            $("#add7").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min7").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total7").html((parseInt(t.val()) * 233).toFixed(2));
+                $("#newslist-7").val(parseInt(t.val()) * 233);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-7" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">馒头</a></td>
+            <td class="tb1_td4">233千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min7" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box7" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add7" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total7" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box8");
+            $("#add8").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min8").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total8").html((parseInt(t.val()) * 54).toFixed(2));
+                $("#newslist-8").val(parseInt(t.val()) * 54);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-8" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">全脂牛奶</a></td>
+            <td class="tb1_td4">54千卡/100毫升</td>
+            <td class="tb1_td5">
+                <input id="min8" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box8" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add8" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total8" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box9");
+            $("#add9").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min9").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total9").html((parseInt(t.val()) * 116).toFixed(2));
+                $("#newslist-9").val(parseInt(t.val()) * 116);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-9" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">米饭</a></td>
+            <td class="tb1_td4">116千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min9" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box9" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add9" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total9" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box10");
+            $("#add10").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min10").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total10").html((parseInt(t.val()) * 32).toFixed(2));
+                $("#newslist-10").val(parseInt(t.val()) * 32);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-10" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">白粥</a></td>
+            <td class="tb1_td4">32千卡/100毫升</td>
+            <td class="tb1_td5">
+                <input id="min10" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box10" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add10" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total10" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box11");
+            $("#add11").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min11").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total11").html((parseInt(t.val()) * 54).toFixed(2));
+                $("#newslist-11").val(parseInt(t.val()) * 54);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-11" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">酸奶</a></td>
+            <td class="tb1_td4">54千卡/100毫升</td>
+            <td class="tb1_td5">
+                <input id="min11" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box11" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add11" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total11" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box12");
+            $("#add12").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min12").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total12").html((parseInt(t.val()) * 46).toFixed(2));
+                $("#newslist-12").val(parseInt(t.val()) * 46);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-12" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">小米粥</a></td>
+            <td class="tb1_td4">46千卡/100毫升</td>
+            <td class="tb1_td5">
+                <input id="min12" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box12" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add12" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total12" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box13");
+            $("#add13").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min13").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total13").html((parseInt(t.val()) * 321).toFixed(2));
+                $("#newslist-13").val(parseInt(t.val()) * 321);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-13" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">蜂蜜</a></td>
+            <td class="tb1_td4">321千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min13" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box13" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add13" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total13" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box14");
+            $("#add14").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min14").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total14").html((parseInt(t.val()) * 112).toFixed(2));
+                $("#newslist-14").val(parseInt(t.val()) * 112);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-14" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">玉米</a></td>
+            <td class="tb1_td4">112千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min14" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box14" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add14" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total14" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box15");
+            $("#add15").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min15").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total15").html((parseInt(t.val()) * 61).toFixed(2));
+                $("#newslist-15").val(parseInt(t.val()) * 61);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-15" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">红薯</a></td>
+            <td class="tb1_td4">61千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min15" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box15" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add15" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total15" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box16");
+            $("#add16").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min16").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total16").html((parseInt(t.val()) * 435).toFixed(2));
+                $("#newslist-16").val(parseInt(t.val()) * 435);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-16" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">饼干</a></td>
+            <td class="tb1_td4">435千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min16" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box16" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add16" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total16" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box17");
+            $("#add17").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min17").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total17").html((parseInt(t.val()) * 388).toFixed(2));
+                $("#newslist-17").val(parseInt(t.val()) * 388);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-17" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">油条</a></td>
+            <td class="tb1_td4">388千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min17" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box17" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add17" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total17" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box18");
+            $("#add18").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min18").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total18").html((parseInt(t.val()) * 301).toFixed(2));
+                $("#newslist-18").val(parseInt(t.val()) * 301);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-18" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">面条</a></td>
+            <td class="tb1_td4">301千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min18" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box18" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add18" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total18" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box19");
+            $("#add19").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min19").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total19").html((parseInt(t.val()) * 48).toFixed(2));
+                $("#newslist-19").val(parseInt(t.val()) * 48);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-19" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">豆腐脑</a></td>
+            <td class="tb1_td4">48千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min19" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box19" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add19" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total19" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box20");
+            $("#add20").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min20").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total20").html((parseInt(t.val()) * 259).toFixed(2));
+                $("#newslist-20").val(parseInt(t.val()) * 259);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-20" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">烙饼</a></td>
+            <td class="tb1_td4">259千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min20" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box20" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add20" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total20" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box21");
+            $("#add21").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min21").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total21").html((parseInt(t.val()) * 214).toFixed(2));
+                $("#newslist-21").val(parseInt(t.val()) * 214);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-21" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">花卷</a></td>
+            <td class="tb1_td4">214千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min21" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box21" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add21" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total21" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box22");
+            $("#add22").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min22").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total22").html((parseInt(t.val()) * 16).toFixed(2));
+                $("#newslist-22").val(parseInt(t.val()) * 16);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-22" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">黄瓜</a></td>
+            <td class="tb1_td4">16千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min22" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box22" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add22" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total22" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box23");
+            $("#add23").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min23").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total23").html((parseInt(t.val()) * 85).toFixed(2));
+                $("#newslist-23").val(parseInt(t.val()) * 85);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-23" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">番茄炒蛋</a></td>
+            <td class="tb1_td4">85千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min23" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box23" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add23" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total23" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box24");
+            $("#add24").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min24").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total24").html((parseInt(t.val()) * 84).toFixed(2));
+                $("#newslist-24").val(parseInt(t.val()) * 84);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-24" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">豆腐</a></td>
+            <td class="tb1_td4">84千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min24" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box24" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add24" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total24" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box25");
+            $("#add25").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min25").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total25").html((parseInt(t.val()) * 17).toFixed(2));
+                $("#newslist-25").val(parseInt(t.val()) * 17);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-25" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">白菜</a></td>
+            <td class="tb1_td4">17千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min25" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box25" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add25" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total25" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box26");
+            $("#add26").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min26").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total26").html((parseInt(t.val()) * 81).toFixed(2));
+                $("#newslist-26").val(parseInt(t.val()) * 81);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-26" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">马铃薯</a></td>
+            <td class="tb1_td4">81千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min26" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box26" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add26" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total26" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---商品加减算总数---->
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box27");
+            $("#add27").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min27").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total27").html((parseInt(t.val()) * 40).toFixed(2));
+                $("#newslist-27").val(parseInt(t.val()) * 40);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-27" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">蔬菜沙拉</a></td>
+            <td class="tb1_td4">40千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min27" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box27" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add27" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total27" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box28");
+            $("#add28").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min28").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total28").html((parseInt(t.val()) * 27).toFixed(2));
+                $("#newslist-28").val(parseInt(t.val()) * 27);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-28" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">木耳</a></td>
+            <td class="tb1_td4">27千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min28" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box28" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add28" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total28" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box29");
+            $("#add29").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min29").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total29").html((parseInt(t.val()) * 20).toFixed(2));
+                $("#newslist-29").val(parseInt(t.val()) * 20);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-29" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">花菜</a></td>
+            <td class="tb1_td4">20千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min29" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box29" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add29" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total29" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box30");
+            $("#add30").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min30").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total30").html((parseInt(t.val()) * 167).toFixed(2));
+                $("#newslist-30").val(parseInt(t.val()) * 167);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-30" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">鸡肉</a></td>
+            <td class="tb1_td4">167千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min30" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box30" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add30" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total30" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box31");
+            $("#add31").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min31").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total31").html((parseInt(t.val()) * 106).toFixed(2));
+                $("#newslist-31").val(parseInt(t.val()) * 106);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-31" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">牛肉</a></td>
+            <td class="tb1_td4">106千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min31" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box31" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add31" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total31" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box32");
+            $("#add32").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min32").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total32").html((parseInt(t.val()) * 143).toFixed(2));
+                $("#newslist-32").val(parseInt(t.val()) * 143);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-32" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">猪肉</a></td>
+            <td class="tb1_td4">143千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min32" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box32" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add32" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total32" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box33");
+            $("#add33").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min33").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total33").html((parseInt(t.val()) * 113).toFixed(2));
+                $("#newslist-33").val(parseInt(t.val()) * 113);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-33" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">鱼肉</a></td>
+            <td class="tb1_td4">113千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min33" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box33" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add33" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total33" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box34");
+            $("#add34").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min34").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total34").html((parseInt(t.val()) * 51).toFixed(2));
+                $("#newslist-34").val(parseInt(t.val()) * 51);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-34" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">梨</a></td>
+            <td class="tb1_td4">51千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min34" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box34" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add34" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total34" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box35");
+            $("#add35").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min35").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total35").html((parseInt(t.val()) * 61).toFixed(2));
+                $("#newslist-35").val(parseInt(t.val()) * 61);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-35" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">猕猴桃</a></td>
+            <td class="tb1_td4">61千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min35" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box35" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add35" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total35" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box36");
+            $("#add36").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min36").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total36").html((parseInt(t.val()) * 93).toFixed(2));
+                $("#newslist-36").val(parseInt(t.val()) * 93);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-36" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">香蕉</a></td>
+            <td class="tb1_td4">93千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min36" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box36" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add36" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total36" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box37");
+            $("#add37").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min37").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total37").html((parseInt(t.val()) * 53).toFixed(2));
+                $("#newslist-37").val(parseInt(t.val()) * 53);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-37" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">苹果</a></td>
+            <td class="tb1_td4">53千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min37" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box37" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add37" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total37" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box38");
+            $("#add38").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min38").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total38").html((parseInt(t.val()) * 31).toFixed(2));
+                $("#newslist-38").val(parseInt(t.val()) * 31);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-38" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">西瓜</a></td>
+            <td class="tb1_td4">31千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min38" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box38" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add38" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total38" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <script type="text/javascript">
+        $(function () {
+            var t = $("#text_box39");
+            $("#add39").click(function () {
+                t.val(parseInt(t.val()) + 1)
+                setTotal(); GetCount();
+            })
+            $("#min39").click(function () {
+                if(t.val()>0){
+                    t.val(parseInt(t.val()) - 1)
+                    setTotal(); GetCount();
+                }
+            })
+            function setTotal() {
+
+                $("#total39").html((parseInt(t.val()) * 42).toFixed(2));
+                $("#newslist-39").val(parseInt(t.val()) * 42);
+            }
+            setTotal();
+        })
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb2">
+        <tr>
+            <td class="tb2_td1"><input type="checkbox" value="1" name="newslist" id="newslist-39" /></td>
+            <!--  <td class="tb2_td2"><a href="#"><img src="images/img1.jpg"/></a></td>-->
+            <td class="tb2_td3"><a href="#">桃子</a></td>
+            <td class="tb1_td4">42千卡/100克</td>
+            <td class="tb1_td5">
+                <input id="min39" name=""  style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="-" />
+                <input id="text_box39" name="" type="text" value="1" style=" width:30px; text-align:center; border:1px solid #ccc;" />
+                <input id="add39" name="" style=" width:20px; height:18px;border:1px solid #ccc;" type="button" value="+" />
+            </td>
+            <td class="tb1_td6"><label id="total39" class="tot" style="color:#ff5500;font-size:14px; font-weight:bold;">144</label></td>
+            <!--   <td class="tb1_td7"><a href="#">删除</a></td>-->
+        </tr>
+    </table>
+    <!---总数---->
+    <script type="text/javascript">
+        $(function () {
+            $(".quanxun").click(function () {
+                setTotal();
+                //alert($(lens[0]).text());
+            });
+            function setTotal() {
+                var len = $(".tot");
+                var num = 0;
+                for (var i = 0; i < len.length; i++) {
+                    num = parseInt(num) + parseInt($(len[i]).text());
+
+                }
+                //alert(len.length);
+                $("#zong1").text(parseInt(num).toFixed(2));
+                $("#shuliang").text(len.length);
+            }
+            //setTotal();
+        })
+    </script>
+    <script type="text/javascript">
+        function closePage() {
+            var frameId = window.frameElement && window.frameElement.id || '';
+            //alert(frameId);
+            if(frameId == 'frame1'){
+                parent.document.getElementById("food1").style.display = 'none';
+                parent.document.getElementById("fade").style.display = 'none';
+                var zong = document.getElementById("zong1").textContent+"千卡";
+                parent.document.getElementById("breakfast").textContent = zong;
+            }else if(frameId == 'frame3'){
+                parent.document.getElementById("food3").style.display = 'none';
+                parent.document.getElementById("fade").style.display = 'none';
+                var zong = document.getElementById("zong1").textContent+"千卡";
+                parent.document.getElementById("dinner").textContent = zong;
+            }else{
+                parent.document.getElementById("food2").style.display = 'none';
+                parent.document.getElementById("fade").style.display = 'none';
+                var zong = document.getElementById("zong1").textContent+"千卡";
+                parent.document.getElementById("lunch").textContent = zong;
+            }
+            console.log("ok");
+        }
+
+    </script>
+    <table cellpadding="0" cellspacing="0" class="gwc_tb3">
+        <tr>
+            <td class="tb1_td1">&nbsp;</td>
+            <td class="tb1_td1">&nbsp;</td>
+            <td class="tb3_td1">&nbsp;</td>
+            <td class="tb3_td2">已选食物 <label id="shuliang" style="color:#ff5500;font-size:14px; font-weight:bold;">0</label> 个</td>
+            <td class="tb3_td3">总热量:<span style=" color:#ff5500;"><label id="zong1" style="color:#ff5500;font-size:15px; font-weight:bold;"></label></span><span>千卡</span></td>
+            <td class="tb3_td4">
+                <span id="jz1">确定</span>
+                <a href="#" style="display:none;" class="jz2" id="jz2"
+                onclick="closePage()">确定</a>
+            </td>
+        </tr>
+    </table>
+
+</div>
+
+
+</body>
+</html>

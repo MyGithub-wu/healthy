@@ -6,7 +6,15 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
 <!-- TITLE -->
-<title>Home</title>
+<title>膳食健康管理</title>
+
+
+	<!--图表-->
+	<link rel="stylesheet" href="css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+	<script src="https://image.39.net/jquery/jquery-1.7.2.min.js"></script>
+	<script src="js/Chart.bundle.min.js"></script>
+
+
 
 <!-- Main StyleSheet -->
 <link href="style.css" rel="stylesheet" type="text/css" />
@@ -14,6 +22,8 @@
 <link href="css/font-awesome.css" rel="stylesheet" type="text/css" />
 <!--<link rel="stylesheet" href="css/bootstrap.min.css">-->
 <link rel="stylesheet" href="./css/libs/animate.css">
+	<link href="https://image.39.net/preview/jfxgj/css/base.css" rel="stylesheet" type="text/css">
+	<script src="https://image.39.net/jquery/jquery-1.7.2.min.js"></script>
 
 
 <!-- bxSlider CSS file -->
@@ -21,7 +31,6 @@
 
 	<!--必要样式-->
 	<link href="dist/css/component-chosen.css" rel="stylesheet">
-
 	<!--<link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">-->
 
 <!-- LayerSlider stylesheet -->
@@ -34,53 +43,74 @@
 <script src="layerslider/js/layerslider.kreaturamedia.jquery.js" type="text/javascript"></script>
 
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
-
-
-<!-- bxSlider Javascript file -->
+	<!-- bxSlider Javascript file -->
 <script src="./js/jquery.bxslider.js"></script>
 <script>
+	var d1;
+	var d2;
+	var d3;
 $(document).ready(function(){
 $('.bxslider').bxSlider({
-						
 						pager: false,
 						controls: true,
 						auto: true
-						
-						
+
+
 						});
 });
 </script>
 
+	<!--弹出层食物样式-->
+	<style>
+		.black_overlay{
+			display: none;
+			position: absolute;
+			top: 0%;
+			left: 0%;
+			width: 100%;
+			height: 100%;
+			background-color: #333;
+			z-index:1001;
+			-moz-opacity: 0.8;
+			opacity:.80;
+			filter: alpha(opacity=80);
+		}
+		.white_content {
+			display: none;
+			position: absolute;
+			top: 10%;
+			left: 10%;
+			width: 80%;
+			height: 80%;
+			background-color: white;
+			z-index:1002;
+			overflow: auto;
+		}
+	</style>
+
 
 
 <link rel="stylesheet" type="text/css" href="lightbox/jquery.fancybox.css" media="screen" />
+
 <script src="lightbox/jquery.fancybox.js"></script>
-<script type="text/javascript">
-		$(document).ready(function() {
-								   
-			$('.fancybox').fancybox();
-
-		});
-</script>
-
 
 <!-- GOTO TOP JQUERY -->
 <script type="text/javascript">
 $(function() {
 	$(window).scroll(function() {
 		if($(this).scrollTop() != 0) {
-			$('#gotop').fadeIn();	
+			$('#gotop').fadeIn();
 		} else {
 			$('#gotop').fadeOut();
 		}
 	});
- 
+
 	$('#gotop').click(function() {
 		$('body,html').animate({scrollTop:0},800);
-	});	
+	});
 });
 </script>
-	
+
 
 
 <!-- HEADER JQUERY -->
@@ -88,11 +118,11 @@ $(function() {
 $(function() {
 	$(window).scroll(function() {
 		if($(this).scrollTop() >= 200) {
-			$('.header').addClass("header_fix");	
+			$('.header').addClass("header_fix");
 		} else {
 		   $('.header').removeClass("header_fix");
 		}
-	});	
+	});
 });
 </script>
 
@@ -101,22 +131,162 @@ $(function() {
 
 if($(window).width() <= 900){
 $(document).ready(function() {
-							
-							
-							
+
+
+
 			$('.mobile .title').click(function() {
-										
+
 										$(this).next("ul").slideToggle();
 										$(this).toggleClass("minus");
-										
+
 										});
-			
-			
+
+
 
 		});
 
 }
+
+
 </script>
+	<!--食物弹出层-->
+	<script>
+		function showFood1()
+		{
+			//alert("ok")
+			document.getElementById('food1').style.display='block';
+			document.getElementById('fade').style.display='block' ;
+			//var bgdiv = document.getElementById(bg_div);
+			//bgdiv.style.width = document.body.scrollWidth;
+// bgdiv.style.height = $(document).height();
+			//$("#"+bg_div).height($(document).height());
+		}
+		function showFood3()
+		{
+			document.getElementById('food3').style.display='block';
+			document.getElementById('fade').style.display='block' ;
+		}
+		function showFood2()
+		{
+			//alert("ok")
+			document.getElementById('food2').style.display='block';
+			document.getElementById('fade').style.display='block' ;
+			//var bgdiv = document.getElementById(bg_div);
+			//bgdiv.style.width = document.body.scrollWidth;
+// bgdiv.style.height = $(document).height();
+			//$("#"+bg_div).height($(document).height());
+		}
+		function showExercise()
+		{
+			document.getElementById('exercise').style.display='block';
+			document.getElementById('fade1').style.display='block' ;
+		}
+		<!--食物关闭层-->
+		function CloseDiv()
+		{
+			document.getElementById('food1').style.display='none';
+			document.getElementById('food2').style.display='none';
+			document.getElementById('food3').style.display='none';
+			document.getElementById('fade').style.display='none';
+		};
+		function CloseDiv1()
+		{
+			document.getElementById('exercise').style.display='none';
+			document.getElementById('fade1').style.display='none';
+		};
+
+		function showChart(){
+			var breakfast = document.getElementById('breakfast').textContent;
+			var lunch = document.getElementById('lunch').textContent;
+			var dinner = document.getElementById('dinner').textContent;
+			if(breakfast=='' || lunch=='' || dinner==''){
+				alert("亲,请填入当日摄入热量！");
+				return;
+			}
+			var eat_qianka = Number(breakfast.replace('千卡','')) +
+					Number(lunch.replace('千卡',''))+
+					Number(dinner.replace('千卡',''));
+			console.log("eat_qianka"+eat_qianka);
+			var exercise_qianka = document.getElementById('exercise_qianka').textContent;
+			if(exercise_qianka==''){
+				alert("亲,请填入当日运动热量！");
+				return;
+			}
+			exercise_qianka = Number(exercise_qianka.replace("千卡",""));
+			console.log("exercise_qianka"+exercise_qianka);
+			var url = document.getElementById('calculate').contentWindow.document.documentURI;
+			console.log(document.getElementById('calculate').contentWindow);
+			var results = url.split("#");
+			if(results[1] ==''){
+				alert("亲,请计算您每日所需热量！");
+				return;
+			}
+			var everyEngery = getEveryEngry(results[1]);
+			console.log("计算所得："+everyEngery);
+			d1 = everyEngery;
+			d2 = eat_qianka;
+			d3 = exercise_qianka;
+			var doughnutData = {
+				labels: [
+					"基础代谢",
+					"当日摄入",
+					"运动消耗"
+				],
+				datasets: [
+					{
+						data: [d1, d2, d3],
+						backgroundColor: [
+							"#DCDCDC",
+							"#187cc2",
+							"#3CB371"
+						],
+						hoverBackgroundColor: [
+							"#DCDCDC",
+							"#187cc2",
+							"#3CB371"
+						]
+					}]
+			};
+			var ctx = document.getElementById("doughnut-graph").getContext("2d");
+			var DoughnutChart = new Chart(ctx, {
+				type: 'doughnut',
+				data: doughnutData,
+				responsive : true
+			});
+			document.getElementById('chart').style.display='block';
+			var leftEngery = everyEngery - (eat_qianka - exercise_qianka);
+			if(leftEngery < 0){
+				document.getElementById("description").textContent = "您今天的饮食已经过量，请适量锻炼";
+				document.getElementById("feature").style.display='block';
+			}else{
+				document.getElementById("description").textContent = "根据您的基础代谢率，您还可以吃"+leftEngery+"千卡";
+				document.getElementById("feature").style.display='block';
+			}
+
+
+		}
+		function getEveryEngry(url) {
+			var urls = url.split("?");
+			var results = urls[1].split("&");
+			var sex = results[0].split("=")[1];
+			var age = results[1].split("=")[1];
+			var weight = results[2].split("=")[1];
+			var height = results[3].split("=")[1];
+			var active = results[4].split("=")[1];
+			var result = new Number();
+			if(sex == '%E5%A5%B3'){
+				result = (655 + (9.6 * weight) + (1.8 * height) - (4.7 * age) )* active ;
+			}else{
+				result =  (66 + (13.7 * weight) + ( 5 * height) - (6.8 * age)) * active ;
+			}
+			result = result.toFixed(2);
+			return result;
+		}
+	</script>
+
+
+
+
 
 </head>
 
@@ -128,7 +298,7 @@ $(document).ready(function() {
 <div class="container">
 
 			<a href="#" class="logo"><img src="images/logo.png" alt="" /></a>
-			
+
 			<div class="nav mobile">
 			<div class="title">Menu <span class="fa "></span></div>
 			<ul>
@@ -155,108 +325,106 @@ $(document).ready(function() {
 
 						<div class="ls-slide" data-ls="transition2d:1;timeshift:-1000;">
 						<img src="images/slider/slide-1.jpg" class="ls-bg" alt="Slide background"/>
-						
-						
+
+
 						<div class="ls-l videopreview" style="top:87px;left:0px;white-space: nowrap;" data-ls="offsetxin:-200;durationin:2000;offsetxout:-200;">
-						<iframe src="file:///Users/umetrip/Documents/GitHub/healthy/public/viedo/1.mp4?&autoplay=true" width="443" height="290" frameborder="0"  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+						<iframe src="viedo/1.mp4?&autoplay=true" width="443" height="290" frameborder="0"  webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 					<!--	<img src="images/player.png" alt="" />-->
 						</div>
-						
-						
+
+
 						<div class="ls-l" style="top:140px;left:638px;white-space: nowrap;" data-ls="offsetxin:0;delayin:1000;easingin:easeInOutQuart;scalexin:0.7;scaleyin:0.7;offsetxout:-800;durationout:1000;">
-						<h2 class="l1">人体热量计算</h2>
+						<h2 class="l1">膳食健康管理</h2>
 						</div>
-						
+
 						<div class="ls-l" style="top:200px;left:583px;white-space: nowrap;" data-ls="offsetxin:0;delayin:1000;easingin:easeInOutQuart;scalexin:0.7;scaleyin:0.7;offsetxout:-800;durationout:1000;">
 						</div>
-						
-					
-						
+
+
+
 						<div class="ls-l" style="top:265px;left:598px;" data-ls="offsetxin:0;delayin:1000;easingin:easeInOutQuart;scalexin:0.7;scaleyin:0.7;offsetxout:-800;durationout:1000;">
-						<a href="http://jianfei.39.net/box/cal#" class="button2">Learn More</a>
+						<a href="#" class="button1">Learn More</a>
 						</div>
 
 						<div class="ls-l" style="top:265px;left:810px;" data-ls="offsetxin:0;delayin:1000;easingin:easeInOutQuart;scalexin:0.7;scaleyin:0.7;offsetxout:-800;durationout:1000;">
 						<a href="#" class="button1">Start Now</a>
 						</div>
-						
-					   
+
+
 						</div><!--FIRST SLIDE-->
-						
-						
-						
+
+
+
 						<!--<div class="ls-slide" data-ls="transition2d:1;timeshift:-1000;">
 						<img src="images/slider/123.jpg" class="ls-bg" alt="Slide background"/>-->
-						
-						
+
+
 					<!--	<div class="ls-l videopreview" style="top:87px;left:0px;white-space: nowrap;" data-ls="offsetxin:-200;durationin:2000;offsetxout:-200;">
 						&lt;!&ndash;<iframe src="http://player.vimeo.com/video/34134308?portrait=0&amp;color=ff9933&autoplay=1" width="443" height="290" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>&ndash;&gt;
 						&lt;!&ndash;<img src="images/player.png" alt="" />&ndash;&gt;
 							<iframe src="file:///Users/umetrip/Documents/GitHub/healthy/public/viedo/1.mp4?portrait=0&amp;color=ff9933&autoplay=1" width="443" height="290" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
 						</div>-->
-						
-						
+
+
 					<!--	<div class="ls-l" style="top:140px;left:638px;white-space: nowrap;" data-ls="offsetxin:0;delayin:1000;easingin:easeInOutQuart;scalexin:0.7;scaleyin:0.7;offsetxout:-800;durationout:1000;">
 						<h2 class="l1">人体热量计算</h2>
 						</div>
-						
+
 						<div class="ls-l" style="top:200px;left:583px;white-space: nowrap;" data-ls="offsetxin:0;delayin:1000;easingin:easeInOutQuart;scalexin:0.7;scaleyin:0.7;offsetxout:-800;durationout:1000;">
 						<h2 class="l2">人体热量计算</h2>
 						</div>-->
-						
-					
-						
+
+
+
 						<!--<div class="ls-l" style="top:265px;left:598px;" data-ls="offsetxin:0;delayin:1000;easingin:easeInOutQuart;scalexin:0.7;scaleyin:0.7;offsetxout:-800;durationout:1000;">
 						<a href="#" class="button2">Learn More</a>
 						</div>
-						
-						
+
+
 						<div class="ls-l" style="top:265px;left:810px;" data-ls="offsetxin:0;delayin:1000;easingin:easeInOutQuart;scalexin:0.7;scaleyin:0.7;offsetxout:-800;durationout:1000;">
 						<a href="#" class="button1">Start Now</a>
 						</div>-->
-						
-					   
+
+
 						</div><!--FIRST SLIDE-->
-						
-			 
-   
-	
+
+
+
+
 </div>
-</div> 
+</div>
 </div>
 
-<!--
-<div class="service_section">
+<!--<div class="service_section">
 <div class="container">
 
 			<h2>人体热量计算</h2>
 			<h4>One machine can do the work of fifty ordinary men. No machine can do the work of one extraordinary man</h4>
-			
+
 			<div class="insider">
-		   
+
 				<div class="column">
 				<span class="fa fa-mobile"></span>
 				<h3>Responsive layout</h3>
 				<p>From there to here, and here to there, funny things are everywhere.</p>
 				</div>
-				
+
 				<div class="column">
 				<span class="fa fa-comment-o"></span>
 				<h3>Customer support</h3>
 				<p>From there to here, and here to there, funny things are everywhere.</p>
 				</div>
-				
+
 				<div class="column">
 				<span class="fa fa-heart-o"></span>
 				<h3>Lovely design</h3>
 				<p>From there to here, and here to there, funny things are everywhere.</p>
 				</div>
-		   
+
 			</div>
 
 </div>
-</div>
--->
+</div>-->
 
 
 
@@ -265,18 +433,18 @@ $(document).ready(function() {
 <!--<div class="feature_section" id="features">
 <div class="container">
 
-				
+
 				<div class="leftside">
 				<img src="images/thumbs/t1.png" alt=""  class="wow bounceInLeft animated" data-wow-duration="2s" data-wow-offset="300" data-wow-delay="0.2s" />
 				</div>
-				
-				
+
+
 				<div class="rightside">
 				<h2>Explore the awesomeness</h2>
 				<p>
 				Designing is a matter of concentration. You go deep into what you want to do. It's about intensive research, really. The concentration is warm and intimate and like the fire inside the earth - intense but not distorted. You can go to a place, really feel it in your heart. It's actually a beautiful feeling.
 				</p>
-				
+
 				<div class="feature">
 				<span class="fa fa-life-ring"></span>
 				<div class="description">
@@ -284,12 +452,12 @@ $(document).ready(function() {
 				Designing is a matter of concentration. You go deep into what you want to do. It's about intensive research, really.
 				</div>
 				</div>
-				
+
 				<br clear="all" />
-				
+
 				<a href="#" class="button3">Learn More</a>
 				<a href="#" class="button4">Start Now</a>
-				</div>			
+				</div>
 
 </div>
 </div>-->
@@ -301,13 +469,13 @@ $(document).ready(function() {
 <!--<div class="feature_section ano_feature_section">
 <div class="container">
 
-				
+
 				<div class="leftside">
 				<h2>Describe more about product</h2>
 				<p>
 				Designing is a matter of concentration. You go deep into what you want to do. It's about intensive research, really. The concentration is warm and intimate and like the fire inside the earth - intense but not distorted. You can go to a place, really feel it in your heart. It's actually a beautiful feeling.
 				</p>
-				
+
 				<div class="feature">
 				<span class="fa fa-life-ring"></span>
 				<div class="description">
@@ -315,7 +483,7 @@ $(document).ready(function() {
 				Designing is a matter of concentration. You go deep into what you want to do. It's about intensive research, really.
 				</div>
 				</div>
-				
+
 				<div class="feature">
 				<span class="fa fa-play-circle-o "></span>
 				<div class="description">
@@ -323,13 +491,13 @@ $(document).ready(function() {
 				Designing is a matter of concentration. You go deep into what you want to do. It's about intensive research, really.
 				</div>
 				</div>
-				
+
 				</div>
-				
-				
+
+
 				<div class="rightside">
 				<img src="images/thumbs/t2.png" alt="" class="wow bounceInRight animated imagethumb2" data-wow-offset="300" data-wow-delay="0.2s" />
-				</div>			
+				</div>
 
 </div>
 </div>-->
@@ -342,47 +510,47 @@ $(document).ready(function() {
 
 			<h2>Frequently Asked Questions</h2>
 			<h4>One machine can do the work of fifty ordinary men. No machine can do the work of one extraordinary man</h4>
-			
-			
+
+
 			<div class="faqbox">
 			<div class="title">Are bears just about to extinct?</div>
 			<p>
 			Yes! But if you’d like to buy us a slice of cheap pizza, we’ll reward you with some cool bonus features.
 			</p>
 			</div>
-			
+
 			<div class="faqbox longer">
 			<div class="title">Will Star Wars Episode VII be awesome?</div>
 			<p>
 			Absolutely not! This theme takes privacy and security extremely seriously. Your personal information will not be shared with anyone. All interaction with this website is encrypted over HTTPS, using the same encryption technology used by banks.
 			</p>
 			</div>
-			
-			
+
+
 			<div class="faqbox">
 			<div class="title">Are bears just about to extinct?</div>
 			<p>
 			Yes! But if you’d like to buy us a slice of cheap pizza, we’ll reward you with some cool bonus features.
 			</p>
 			</div>
-			
-			
+
+
 			<div class="faqbox">
 			<div class="title">Are bears just about to extinct?</div>
 			<p>
 			Yes! But if you’d like to buy us a slice of cheap pizza, we’ll reward you with some cool bonus features.
 			</p>
 			</div>
-			
-			
+
+
 			<div class="faqbox">
 			<div class="title">Are bears just about to extinct?</div>
 			<p>
 			Yes! But if you’d like to buy us a slice of cheap pizza, we’ll reward you with some cool bonus features.
 			</p>
 			</div>
-			
-			
+
+
 
 </div>
 </div>-->
@@ -391,186 +559,175 @@ $(document).ready(function() {
 
 
 <div class="common_section" id="testimonials_part">
-<div class="container">
+	<div class="container">
 	<h2>人体每日所需热量计算</h2>
-	<h4 style="margin:0 0 40px 0;">知道每日所需卡路里，才能更有效的减肥和管理身材</h4>
-	<div class="testimonial_box">
-		<iframe src="http://jianfei.39.net/box/cal#" width="980"  height="580"  frameborder="no" border="0" marginwidth="0" marginheight="140" scrolling="no"></iframe>
+	<h4 style="margin:0 0 40px 0;">知道每日所需卡路里，才能更有效的减肥和管理身材。人体每天所需要的热量就是人体基础代谢所需要的基本热量、体力活动所需要的热量和消化食物所需要的热量之和。</h4>
+		<div class="testimonial_box">
+			<iframe id = "calculate" src="calculate.html#" width="100%"  height="400" border="0" marginwidth="0"  scrolling="no" align="absmiddle"></iframe>
+		</div>
 	</div>
+
 </div>
-</div>
+
 
 <div class="pricing_table_section" id="pricing_part">
 <div class="container">
 
-			<h2>记录</h2>
+
+			<h2>饮食热量记录</h2>
 			<h4>计算你每一天的热量,保持更健康的体态</h4>
-			
-		   
-			<div class="insider">
-			
-			
+	<div id="fade" class="black_overlay" onclick="CloseDiv()">
+	</div>
+	<!--早餐-->
+	<div id="food1" class="white_content">
+		<iframe id= "frame1" src="breakfast.html#" width="100%"  height="400" border="0" marginwidth="0"  scrolling="yes" align="absmiddle" ></iframe>
+	</div>
+	<!--晚餐-->
+	<div id="food3" class="white_content">
+		<iframe id = "frame3" src="breakfast.html#" width="100%"  height="400" border="0" marginwidth="0"  scrolling="yes" align="absmiddle" ></iframe>
+	</div>
+	<!--午餐-->
+	<div id="food2" class="white_content">
+		<iframe id = "frame2" src="breakfast.html#" width="100%"  height="400" border="0" marginwidth="0"  scrolling="yes" align="absmiddle" ></iframe>
+	</div>
+			<div class="insider" id = "insider">
 			<div class="block">
 			<div class="head">
-			<h2>饮食</h2>
-				<p><strong>EVERY DAY</strong></p>
+			<h2>早餐</h2>
+				<p style="color:#9d9d9d;font-size:5px" >建议490~670千卡</p>
+				<p><strong id = "breakfast" style="color:#FF8C00; font-size: 20px"></strong></p>
 			</div>
 			<ul>
-			<li>  早餐
+
 
 				<div class="col-xs-12 col-md-4 mb-5">
-					<select id="div1" class="form-control form-control-chosen" data-placeholder="Please select..." multiple>
-						<option></option>
-						<option>鸡蛋 100克|137千卡</option>
-						<option>牛奶 100克|54千卡</option>
-						<option>面包 100克|211千卡</option>
-						<option>粥  100克|51千卡</option>
-						<option>苹果 100克|46千卡</option>
-						<option>土豆 100克|77千卡</option>
-						<option>青菜 100克|18千卡</option>
-						<option>玉米 100克|52千卡</option>
-					</select>
+					<button id="but1" style="height: 50px; width: 100% ;background:#f8f9fa; font-size:15px; font-family:'open_sansregular'; color: #909090" onclick="showFood1()">+添加</button>
+					</button>
 				</div>
-			</li>
 
-			<li>午餐<!--<span><img src="images/icons/i8.png" alt="" /></span>-->
-				<div class="col-xs-12 col-md-4 mb-5">
-					<select id="div2" class="form-control form-control-chosen" data-placeholder="Please select..." multiple>
-						<option></option>
-						<option>鸡蛋 100克|137千卡</option>
-						<option>牛奶 100克|54千卡</option>
-						<option>面包 100克|211千卡</option>
-						<option>粥  100克|51千卡</option>
-						<option>苹果 100克|46千卡</option>
-						<option>土豆 100克|77千卡</option>
-						<option>青菜 100克|18千卡</option>
-						<option>玉米 100克|52千卡</option>
-					</select>
-				</div>
-			</li>
-			<li>晚餐<span><!--<img src="images/icons/i8.png" alt="" />--></span>
-				<div class="col-xs-12 col-md-4 mb-5">
-					<select id="div3" class="form-control form-control-chosen" data-placeholder="Please select..." multiple>
-						<option></option>
-						<option>鸡蛋 100克|137千卡</option>
-						<option>牛奶 100克|54千卡</option>
-						<option>面包 100克|211千卡</option>
-						<option>粥  100克|51千卡</option>
-						<option>苹果 100克|46千卡</option>
-						<option>土豆 100克|77千卡</option>
-						<option>青菜 100克|18千卡</option>
-						<option>玉米 100克|52千卡</option>
-					</select>
-				</div>
-			</li>
-			<li>加餐<!--<span><img src="images/icons/i8.png" alt="" />--></span>
-				<div class="col-xs-12 col-md-4 mb-5">
-					<select id="div4" class="form-control form-control-chosen" data-placeholder="Please select..." multiple>
-						<option></option>
-						<option>鸡蛋 100克|137千卡</option>
-						<option>牛奶 100克|54千卡</option>
-						<option>面包 100克|211千卡</option>
-						<option>粥  100克|51千卡</option>
-						<option>苹果 100克|46千卡</option>
-						<option>土豆 100克|77千卡</option>
-						<option>青菜 100克|18千卡</option>
-						<option>玉米 100克|52千卡</option>
-					</select>
-				</div>
-			</li>
 			<!--<li><h5>$59 Per Month</h5> <a href="#" class="button5">SIGN UP</a></li>-->
 			</ul>
 			</div>
-			
-			
-			<div class="block">
-			<div class="head">
-			<h2>运动</h2>
-			<p><strong>EVERY DAY</strong></p>
-			</div>
-			<ul>
-			<li>步行</li>
-                <form method="post" class="hpform">
-                    <input type="text" placeholder="小时" />
-                    <!--<input type="email" placeholder="Email" />
-                    <textarea placeholder="Message"></textarea>
-                    <input type="submit" value="SEND" />-->
-                </form>
-                <li>锻炼</li>
-                <form method="post" class="hpform">
-                    <input type="text" placeholder="小时" />
-                    <!--<input type="email" placeholder="Email" />
-                    <textarea placeholder="Message"></textarea>
-                    <input type="submit" value="SEND" />-->
-                </form>
-			</ul>
-			</div>
-			
-			
-			
-			<div class="block">
-			<div class="head">
-			<h2>体重</h2>
-				<p><strong>EVERY DAY</strong></p>
-			</div>
-			<ul>
+				<div class="block">
+						<div class="head">
+							<h2>午餐</h2>
+							<p style="color:#9d9d9d;font-size: small" >建议800~1080千卡</p>
+							<p><strong id= "lunch" style="color:#FF8C00; font-size: 20px"></strong></p>
+						</div>
+						<ul>
+							<div class="col-xs-12 col-md-4 mb-5">
+								<button id="but2" style="height: 50px; width: 100% ;background:#f8f9fa; font-size:15px; font-family:'open_sansregular'; color: #909090" onclick="showFood2()">+添加</button>
+							</div>
+
+							<!--<li><h5>$59 Per Month</h5> <a href="#" class="button5">SIGN UP</a></li>-->
+						</ul>
+					</div>
+
+					<div class="block">
+						<div class="head">
+							<h2>晚餐</h2>
+							<p style="color:#9d9d9d;font-size: small" >建议600~810千卡</p>
+							<p><strong id = "dinner" style="color:#FF8C00; font-size: 20px"></strong></p>
+						</div>
+						<ul>
+							<div class="col-xs-12 col-md-4 mb-5">
+								<button id="but3" style="height: 50px; width: 100% ;background:#f8f9fa; font-size:15px; font-family:'open_sansregular'; color: #909090" onclick="showFood3()">+添加</button>
+							</div>
+
+							<!--<li><h5>$59 Per Month</h5> <a href="#" class="button5">SIGN UP</a></li>-->
+						</ul>
+					</div>
 
 
-				<form method="post" class="hpform">
-					<input type="text" placeholder="千克" />
-					<!--<input type="email" placeholder="Email" />
-                    <textarea placeholder="Message"></textarea>
-                    <input type="submit" value="SEND" />-->
-				</form>
-			<!--<li><h5>$59 Per Month</h5> <a href="#" class="button5">SIGN UP</a></li>-->
-			</ul>
-			</div>
-			
-			
-			</div>
-			
+				</div>
+
 
 </div>
 </div>
-
-
-
-
-<!--<div class="common_section" id="contact_part">
+<div class="common_section" id="contact_part">
 <div class="container">
 
-			&lt;!&ndash;<h2>记录</h2>
-			<h4>term sheet convertible note colluding bootstrapping</h4>
-		   
-			<br clear="all" />
-			<form method="post" class="hpform">
-			<input type="text" placeholder="Name" />
-			<input type="email" placeholder="Email" />
-			<textarea placeholder="Message"></textarea>
-			<input type="submit" value="SEND" />
-			</form>&ndash;&gt;
+			<h2>运动热量记录</h2>
+			<h4>记录每天的运动量，保持健康的体态</h4>
+	<!--锻炼-->
+	<div id="fade1" class="black_overlay" onclick="CloseDiv1()">
+	</div>
+	<div id="exercise" class="white_content">
+		<iframe id = "frame4" src="exercise.html#" width="100%"  height="400" border="0" marginwidth="0"  scrolling="yes" align="absmiddle" ></iframe>
+	</div>
+	<div class="faqbox">
+		<div class="title" style="height: 60px">
+			<div class="div1" style="float: left;width: auto;height: auto;">
+				<img width="80px" height="80px" src="images/icons/i10.png" alt=""/>
+			</div>
+			<div class="div2" style="float: left;width: auto;height: auto;">
+				<p style="font-size: 20px">运动量<strong id = "exercise_qianka" style="color:#FF8C00; font-size: 20px"></strong>
+					<br><span style=" font-size:6px">建议<150千卡</span></p>
+			</div>
 
-	<div id="main" style="width: 600px;height:400px;"></div>
+		</div>
+		<button id="but4" style="height: 50px; width: 100% ;background:#187cc2; font-size:15px; font-family:'open_sansregular'; color: #FFFFFF" onclick="showExercise()">+添加</button>
+	</div>
+	<div id="main" style="width: 600px;height:100px;"></div>
+</div>
 
 
-</div>-->
+	<div class="feature_section ano_feature_section">
+		<div class="container">
+
+
+			<div class="leftside">
+				<h2>经典均衡饮食</h2>
+				<p>
+					均衡饮食是基于中国居民膳食指南建议，最大程度上满足人体各类营养需求的饮食计划。合理饮食的基础上，应保证膳食的多样性，每日食物摄入12种以上，平均每周25种以上。
+				</p>
+
+				<div class="feature" id = "feature" style="display: none">
+					<span class="fa fa-life-ring"></span>
+					<div class="description">
+						<strong id = "description"></strong> <br />
+
+					</div>
+				</div>
+
+				<!--<div class="feature">
+					<span class="fa fa-play-circle-o "></span>
+					<div class="description">
+						<strong>Video Background</strong> <br />
+
+					</div>
+				</div>-->
+
+			</div>
+
+			<div class="rightside">
+				<button class="fenxi" style="height:50px;width:100%;border:1px solid #11598b;	background:#11598b; margin: auto;text-align: center;font-family: 'open_sansregular'; color: #FFFFFF; font-size:18px;margin-bottom: 25px;" onclick="showChart()" >当日分析</button>
+				<div class="col-sm-6" id = "chart" style="display:none ;margin: auto">
+					<!--  <h2 class="text-center"></h2>-->
+					<canvas id="doughnut-graph" height="300px" width="400px" ></canvas>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
 
 
 <div class="subscribe_section" id="subscribe_part">
 <div class="container">
 
 			<h2>If you have any questions, please contact us</h2>
-			
-		   
+
+
 			<br clear="all" />
-			
-			
+
+
 			<form method="post">
 			<input type="email" placeholder="Enter your e-Mail" />
 			<input type="submit" value="SUBSCRIBE" />
 			</form>
 
-			
+
 
 </div>
 </div>
@@ -580,55 +737,38 @@ $(document).ready(function() {
 
 
 
-<!--<div class="common_section">
+<!--
+<div class="common_section">
 <div class="container">
 
-	
+
 			<a href="#" class="footer_logo"><img src="images/logo.png" alt="" /></a>
-		   
-			<div class="copyright">Copyright &copy; 2017.Company name All rights reserved.</div>                    
+
+			<div class="copyright">Copyright &copy; 2017.Company name All rights reserved.</div>
 
 </div>
-</div>-->
+</div>
+-->
 
 
 
 </div><!--wrapper-->
 
-<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 
-<script type="text/javascript">
-    // 基于准备好的dom，初始化echarts实例
-    var myChart = echarts.init(document.getElementById('main'));
 
-    // 指定图表的配置项和数据
-    var option = {
-        title: {
-            text: 'ECharts 入门示例'
-        },
-        tooltip: {},
-        legend: {
-            data:['销量']
-        },
-        xAxis: {
-            data: ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
-        },
-        yAxis: {},
-        series: [{
-            name: '销量',
-            type: 'bar',
-            data: [5, 20, 36, 10, 10, 20]
-        }]
-    };
+<!--<script>
+	//显示食物
+	$("#but1").click(function(){
 
-    // 使用刚指定的配置项和数据显示图表。
-    myChart.setOption(option);
+	});
+</script>-->
+<!--图表-->
+
+<script>
+	// Data for doughnut chart
+
+
 </script>
-
-
-
-
-
 <script>
 	jQuery("#layerslider").layerSlider({
 		responsive: false,
@@ -638,25 +778,9 @@ $(document).ready(function() {
 		hoverPrevNext: false,
 		skinsPath: 'layerslider/skins/'
 	});
-
-
 </script>
 
 <script src="js/wow.js"></script>
-<script>
-wow = new WOW(
-  {
-	animateClass: 'animated',
-	offset:       100
-  }
-);
-wow.init();
-document.getElementById('moar').onclick = function() {
-  var section = document.createElement('section');
-  section.className = 'section--purple wow fadeInDown';
-  this.parentNode.insertBefore(section, this);
-};
-</script>
 
 <script type="text/javascript">
 $(function() {
@@ -743,7 +867,7 @@ return false;
         }
     });
 </script>
-	 
+
 
 
 </body>
